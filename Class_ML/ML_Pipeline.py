@@ -94,8 +94,6 @@ class MLPipeline():
         # Plotting the confusion matrix and a report to see the main scores of our model
         sns.set(style="white")
         plot_confusion_matrix(self.best_model, self.X_test, self.y_test) 
-        # |TN|FP|
-        # |FN|TP|
         plt.show() 
    
         print('='*20,'Training Set Results','='*20)
