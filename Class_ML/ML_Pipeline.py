@@ -4,7 +4,7 @@ from datetime import datetime
 from fastparquet import write
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.preprocessing import StandardScaler #for Scaling the features
+from sklearn.preprocessing import StandardScaler 
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
