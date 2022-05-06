@@ -1,35 +1,31 @@
 import numpy as np
 import pandas as pd
-from datetime import datetime
-from fastparquet import write
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.preprocessing import StandardScaler 
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
-from IPython.display import display, Markdown 
-import pickle
-from sklearn.metrics import plot_confusion_matrix, classification_report
+from datetime import datetime
 from imblearn.over_sampling import SMOTE
+from sklearn.metrics import plot_confusion_matrix, classification_report
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import make_pipeline 
+from sklearn.preprocessing import StandardScaler
 
 
-# --------------------  Creating the Machine Learning pipeline useful for every dataset and classifier (the target must be named 'label') --------------------
+########################################## Creating Class useful for model evaluation ##########################################
+
 
 class MLPipeline():
     
-    def __init__(self,model,data:pd.DataFrame,features:list,test_size=0.3,k_folds=10):
+    def __init__(self,model,test_size=0.3,k_folds=10):
         self.model = model
         self.model_name = type(model).__name__
-        self.data = data
-        self.features = features
         self.test_size = test_size
         self.k_folds = k_folds
         self.scaler = None
 
-    def load_data(self): 
-        self.X,self.y = self.data[self.features],self.data[['label']].values
+    def load_data(self,dataset:pd.DataFrame,target:pd.Series): 
+        self.X,self.y = dataset,target
 
 
     def split_data(self):
@@ -77,19 +73,19 @@ class MLPipeline():
         self.kfold_scores = cross_val_score(pipeline, self.X, self.y, cv=self.k_folds)
         
         
-    def markdown_report(self):
-        display(Markdown(
+    def report(self):
+        print(
         f"""---
         \n Model: {self.model_name}
-        \nDataset size {len(self.X)}, Test size {self.test_size*100:.1f}% 
-        \n*Optimal parameters (GridSearchCV {self.k_folds}-Folds ):*
-        \n   - Best params **{self.best_params}**
-        \n   - Accuracy **{self.best_score:.2f}** 
-        \n*Model_evaluation (test size {self.test_size*100:.1f}%):*
-        \n   -  Train accuracy **{self.train_accuracy:.2f}**
-        \n - Test accuracy **{self.test_accuracy:.2f}**
-        \n*Cross Validation Score :*
-        \n   - Avarage Accuracy **{np.mean(self.kfold_scores):.2f}**   +/-{np.std(self.kfold_scores):.2f} \n---""" ))
+        \nDataset size {len(self.X)}, Test size {self.test_size * 100:.1f}% 
+        \n*Optimal parameters (GridSearchCV {self.k_folds}-Folds ):
+        \n   - Best params {self.best_params}
+        \n   - Accuracy {self.best_score:.2f} 
+        \n*Model_evaluation (test size {self.test_size*100:.1f}%):
+        \n   -  Train accuracy {self.train_accuracy:.2f}
+        \n   - Test accuracy {self.test_accuracy:.2f}
+        \n*Cross Validation Score :
+        \n   - Avarage Accuracy {np.mean(self.kfold_scores):.2f}   +/-{np.std(self.kfold_scores):.2f} \n---""" )
         
         # Plotting the confusion matrix and a report to see the main scores of our model
         sns.set(style="white")
@@ -103,3 +99,5 @@ class MLPipeline():
         report_testing_dtree = classification_report(self.y_test, self.y_pred)
         print(report_testing_dtree)
         print('='*60)
+        
+        
