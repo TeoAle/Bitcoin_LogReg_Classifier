@@ -48,7 +48,7 @@ if __name__ == "__main__":
     data_ohlc['momentum'] = (data_ohlc['close'] - data_ohlc['mid'])/(data_ohlc['high'] - data_ohlc['low'])
 
     # Creating the Money Flow Index
-    data_ohlc['typical_price'] = (data_ohlc['high'] + data_ohlc['low'] + data_ohlc['close'])/3
+    data_ohlc['typical_price'] = data_ohlc[['high', 'low', 'close']].mean(axis=1)
     data_ohlc['money_flow'] = data_ohlc['typical_price']*data_ohlc['volume']
 
     # Creating the Moving Average Convergence Divergence indicator
@@ -73,6 +73,7 @@ if __name__ == "__main__":
     data_ohlc.dropna(axis=0, inplace=True)
     
     # --------------------- Creating a new cleaned dataset with just the columns i'm interested in ---------------------
-    data_ohlc[['excursion','BOP','momentum','typical_price','money_flow','MACD','perc_K','perc_D','volume','number of trades','taker buy base asset volume', 'volatility','label']].to_csv('BTCUSDT_CLEANED.csv')
+   
+    data_ohlc[['excursion', 'BOP', 'momentum',' typical_price', 'money_flow', 'MACD', 'perc_K', 'perc_D', 'volume', 'number of trades', 'taker buy base asset volume', 'volatility', 'label']].to_csv('BTCUSDT_CLEANED.csv')
     
     
