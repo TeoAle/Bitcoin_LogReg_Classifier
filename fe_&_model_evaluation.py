@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 
 ############################ FEATURE ENGINEERING & MODEL EVALUATION ############################
 
-# --------------------- Defining the '_get_volatility' function, we will use it to create a feature  --------------------- 
+# --------------------- Defining the '_get_volatility' function we will use to create the 'Volatility' feature  --------------------- 
 
 def _get_volatility(prices, span=100, delta=pd.Timedelta(hours=1)): 
     """
