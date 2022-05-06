@@ -5,6 +5,10 @@ import seaborn as sns
 from datetime import datetime
 
 
+
+########################################## FEATURE ENGINEERING ##########################################
+
+
 if __name__ == "__main__":
     
     # --------------------- Importing the Dataset downloaded from Binance of the price of bitcoin --------------------- 
@@ -32,7 +36,7 @@ if __name__ == "__main__":
     data_ohlc.loc[data_ohlc['ratio'] > 1 + treshold, 'label'] = 1
     data_ohlc.loc[data_ohlc['ratio'] < 1 - treshold, 'label'] = -1
 
-    data_ohlc.label.value_counts() # The classes aren't quite balanced so i will manage oversampling with SMOTE
+    print(data_ohlc.label.value_counts()) # The classes aren't quite balanced so i will manage oversampling with SMOTE
 
     # --------------------- Creating the features (trading indicators) on which i will train the ML model ---------------------
     
@@ -68,7 +72,7 @@ if __name__ == "__main__":
     
     # --------------------- Cleaning the dataset dropping rows with NaN (I have enough rows to do this without reducing too much my dataset)  ---------------------
     
-    data_ohlc.isna().sum() # taking a look at the columns with NaN (as expected just the columns created before and not imported in the original dataset)
+    print('Number of NaN :\n',data_ohlc.isna().sum()) # taking a look at the columns with NaN (as expected just the columns created before and not imported in the original dataset)
     
     data_ohlc.dropna(axis=0, inplace=True)
     
