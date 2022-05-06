@@ -63,8 +63,8 @@ data_ohlc.Close.plot()                # Plotting the closes we see that the data
 data_ohlc['Volatility'] = _get_volatility(data_ohlc['Close'],delta=pd.Timedelta(hours=2))
 
 data_ohlc['label'] = 0
-data_ohlc.loc[data_ohlc['Ratio'] > 1 + 0.1*data_ohlc['volatility'], 'label'] = 1
-data_ohlc.loc[data_ohlc['Ratio'] < 1 - 0.1*data_ohlc['volatility'], 'label'] = -1
+data_ohlc.loc[data_ohlc['Ratio'] > 1 + 0.1*data_ohlc['Volatility'], 'label'] = 1
+data_ohlc.loc[data_ohlc['Ratio'] < 1 - 0.1*data_ohlc['Volatility'], 'label'] = -1
 
 data_ohlc.label.value_counts() # The classes aren't quite balanced so i will manage oversampling with SMOTE
 
