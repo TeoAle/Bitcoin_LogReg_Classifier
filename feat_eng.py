@@ -36,7 +36,7 @@ if __name__ == "__main__":
     data_ohlc.loc[data_ohlc['ratio'] > 1 + treshold, 'label'] = 1
     data_ohlc.loc[data_ohlc['ratio'] < 1 - treshold, 'label'] = -1
 
-    print(data_ohlc.label.value_counts()) # The classes aren't quite balanced so i will manage oversampling with SMOTE
+    print('Label Value Counts\n',data_ohlc.label.value_counts()) # The classes aren't quite balanced so i will manage oversampling with SMOTE
 
     # --------------------- Creating the features (trading indicators) on which i will train the ML model ---------------------
     
