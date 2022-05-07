@@ -14,7 +14,7 @@ if __name__ == "__main__":
     # --------------------- Importing the Dataset downloaded from Binance of the price of bitcoin --------------------- 
     
     data_ohlc = pd.read_csv('data/BTCUSDT-1m-2022-03.csv', 
-                            names = ['open time', 'open', 'high', 'low', 'close', 'volume', 'close time', 'quote asset volume', 'number of       trades', 'taker buy base asset volume', 'taker buy quote asset volume', 'ignore'])
+                            names = ['open time', 'open', 'high', 'low', 'close', 'volume', 'close time', 'quote asset volume', 'number of trades', 'taker buy base asset volume', 'taker buy quote asset volume', 'ignore'])
 
 
     data_ohlc['timestamp'] = data_ohlc['open time'].map(lambda t: datetime.fromtimestamp(t/1000)) # Open time in Binance is in ms so i divide by 1000
@@ -42,18 +42,18 @@ if __name__ == "__main__":
     
     data_ohlc['volatility'] = data_ohlc['close'].ewm(span=100).std()
 
-    data_ohlc['mid'] = (data_ohlc['high'] + data_ohlc['low'])/2
+    data_ohlc['mid'] = (data_ohlc['high'] + data_ohlc['low']) / 2
 
-    data_ohlc['excursion'] = (data_ohlc['high'] - data_ohlc['low'])/data_ohlc['mid']
+    data_ohlc['excursion'] = (data_ohlc['high'] - data_ohlc['low']) / data_ohlc['mid']
 
     # Creating the Balance of Power (BOP) oscillator
-    data_ohlc['BOP'] = (data_ohlc['close'] - data_ohlc['open'])/(data_ohlc['high'] - data_ohlc['low'])
+    data_ohlc['BOP'] = (data_ohlc['close'] - data_ohlc['open']) / (data_ohlc['high'] - data_ohlc['low'])
 
-    data_ohlc['momentum'] = (data_ohlc['close'] - data_ohlc['mid'])/(data_ohlc['high'] - data_ohlc['low'])
+    data_ohlc['momentum'] = (data_ohlc['close'] - data_ohlc['mid']) / (data_ohlc['high'] - data_ohlc['low'])
 
     # Creating the Money Flow Index
     data_ohlc['typical_price'] = data_ohlc[['high', 'low', 'close']].mean(axis=1)
-    data_ohlc['money_flow'] = data_ohlc['typical_price']*data_ohlc['volume']
+    data_ohlc['money_flow'] = data_ohlc['typical_price'] * data_ohlc['volume']
 
     # Creating the Moving Average Convergence Divergence indicator
     data_ohlc['MACD'] = data_ohlc.close.rolling(5).mean()/data_ohlc.close.rolling(20).mean() - 1
