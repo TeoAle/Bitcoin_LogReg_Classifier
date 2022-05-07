@@ -13,7 +13,7 @@ if __name__ == "__main__":
     
     # --------------------- Importing the Dataset downloaded from Binance of the price of bitcoin --------------------- 
     
-    data_ohlc = pd.read_csv('BTCUSDT-1m-2022-03.csv', 
+    data_ohlc = pd.read_csv('data/BTCUSDT-1m-2022-03.csv', 
                             names = ['open time', 'open', 'high', 'low', 'close', 'volume', 'close time', 'quote asset volume', 'number of       trades', 'taker buy base asset volume', 'taker buy quote asset volume', 'ignore'])
 
 
