@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     data_ohlc['ratio'] = np.concatenate([(data_ohlc['close'].iloc[1:].values / data_ohlc['close'].iloc[:-1]), [1]])
 
-    data_ohlc.ratio.hist(bins=100).plot() # The logaritmic return of the price is symmetrical with respect to zero so the data are balanced
+    data_ohlc.ratio.hist(bins=100).plot() # The return of the price is symmetrical with respect to zero so the data are balanced
     data_ohlc.close.plot()                # Plotting the closes we see that the data is not just rising or just falling in the period we chose
 
     # --------------------- Creating the target column (label) ---------------------
